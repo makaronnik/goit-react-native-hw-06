@@ -1,15 +1,13 @@
 import { Pressable, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 import { Feather } from "@expo/vector-icons";
+import { logout } from "../../../store/user/userThunks";
 
 const LogOutButton = () => {
-  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   return (
-    <Pressable
-      style={styles.button}
-      onPress={() => navigation.navigate("Login")}
-    >
+    <Pressable style={styles.button} onPress={() => dispatch(logout())}>
       <Feather name="log-out" size={24} color="#BDBDBD" />
     </Pressable>
   );

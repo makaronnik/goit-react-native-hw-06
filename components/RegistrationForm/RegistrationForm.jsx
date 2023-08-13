@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { StyleSheet, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import { useNavigation } from "@react-navigation/native";
+import { register } from "../../store/user/userThunks";
 import { validateEmail } from "../../utils/validators";
 import { FormTitle, FormInput, FormPasswordInput } from "../UI/formElements";
 import ChangeAvatar from "./ChangeAvatar";
@@ -13,6 +15,7 @@ const RegistrationForm = () => {
   const [password, setPassword] = useState("");
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const isFormValid = login && email && password;
   const isMailValid = validateEmail(email);
@@ -47,9 +50,7 @@ const RegistrationForm = () => {
       return;
     }
 
-    console.log({ login, email, password });
-
-    navigation.navigate("Home");
+    dispatch(register({ login, email, password }));
   };
 
   return (

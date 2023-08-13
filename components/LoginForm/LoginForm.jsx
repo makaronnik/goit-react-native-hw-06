@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { StyleSheet, View, Text } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import { useNavigation } from "@react-navigation/native";
+import { login } from "../../store/user/userThunks";
 import { validateEmail } from "../../utils/validators";
 import { FormTitle, FormInput, FormPasswordInput } from "../UI/formElements";
 import HidableFormFooter from "../BaseFormScreen/HidableFormFooter";
@@ -11,6 +13,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const isFormValid = email && password;
   const isMailValid = validateEmail(email);
@@ -43,9 +46,7 @@ const LoginForm = () => {
       return;
     }
 
-    console.log({ email, password });
-
-    navigation.navigate("Home");
+    dispatch(login({ email, password }));
   };
 
   const LinkText = (
