@@ -38,10 +38,14 @@ const userSlice = createSlice({
 
   reducers: {
     setUser: (state, { payload }) => {
-      state.user = payload;
+      if (!state.user) {
+        state.user = payload;
+      }
     },
     clearUser: (state) => {
-      state.user = null;
+      if (state.user) {
+        state.user = null;
+      }
     },
   },
 

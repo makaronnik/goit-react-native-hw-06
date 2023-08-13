@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -17,22 +17,25 @@ import { selectUserState } from "./store/user/userSelectors";
 import { auth } from "./firebase/config";
 
 const MainNavigator = () => {
-  const headerOptions = {
-    headerTintColor: "#212121",
-    headerTitleAlign: "center",
-    headerTitleStyle: {
-      fontFamily: "Roboto-Medium",
-      fontSize: 17,
-      lineHeight: 22,
-      letterSpacing: -0.408,
-      textAlign: "center",
-    },
-    headerStyle: {
-      borderBottomColor: "rgba(189, 189, 189, 0.7)",
-      borderBottomWidth: 0.8,
-    },
-    headerLeft: () => <GoBackButton />,
-  };
+  const headerOptions = useMemo(
+    () => ({
+      headerTintColor: "#212121",
+      headerTitleAlign: "center",
+      headerTitleStyle: {
+        fontFamily: "Roboto-Medium",
+        fontSize: 17,
+        lineHeight: 22,
+        letterSpacing: -0.408,
+        textAlign: "center",
+      },
+      headerStyle: {
+        borderBottomColor: "rgba(189, 189, 189, 0.7)",
+        borderBottomWidth: 0.8,
+      },
+      headerLeft: () => <GoBackButton />,
+    }),
+    []
+  );
 
   const {
     user,
@@ -44,11 +47,11 @@ const MainNavigator = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (maybeUser) => {
-      if (maybeUser && !user) {
+      if (maybeUser) {
         const { uid, email, displayName, photoURL } = maybeUser;
 
         dispatch(setUser({ uid, email, displayName, photoURL }));
-      } else if (!maybeUser && user) {
+      } else {
         dispatch(clearUser());
       }
     });
