@@ -13,6 +13,7 @@ const RegistrationForm = () => {
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [imageUri, setImageUri] = useState(null);
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const RegistrationForm = () => {
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        <ChangeAvatar />
+        <ChangeAvatar imageUri={imageUri} setImageUri={setImageUri} />
         <FormTitle text="Реєстрація"></FormTitle>
         <FormInput
           placeholder="Логін"
