@@ -15,6 +15,8 @@ const registerUser = async (email, password, name) => {
     );
 
     await updateProfile(user, { displayName: name });
+
+    return user;
   } catch (error) {
     throw error;
   }
@@ -36,4 +38,14 @@ const logoutUser = async () => {
   }
 };
 
-export { registerUser, loginUser, logoutUser };
+const updateUserAvatar = async (avatarUrl) => {
+  try {
+    const user = auth.currentUser;
+
+    await updateProfile(user, { photoURL: avatarUrl });
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { registerUser, loginUser, logoutUser, updateUserAvatar };

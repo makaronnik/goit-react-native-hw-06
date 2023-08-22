@@ -9,6 +9,7 @@ const thunks = [register, login, logout];
 const persistConfig = {
   key: "user",
   storage: AsyncStorage,
+  whitelist: ["user"],
 };
 
 const initialState = {
